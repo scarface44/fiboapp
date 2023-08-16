@@ -9,6 +9,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3   
 
-
-
-
+      - name: Build and push
+        uses: docker/build-push-action@v4
+        with:
+          context: ../client
+          push: true
+          tags: asheer/client-app
