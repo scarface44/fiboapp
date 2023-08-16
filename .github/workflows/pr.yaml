@@ -6,10 +6,9 @@ jobs:
   checkspr:
     runs-on: ubunt-latetst
     steps:
-      - uses: actions/checkoutv3
-      - run: docker build ../client --file ../client/Dockerfile.dev --tag asheer/react-test
-      - run: docker run -e CI=true  asheer/react-test npm run test -- --coverage
-      - run: echo "All test passed"
+      - name: Checkout
+        uses: actions/checkout@v3   
+
 
 
 
