@@ -4,7 +4,7 @@ on: [push]
 
 jobs:
   checkspr:
-    runs-on: ubunt-latetst
+    runs-on: ubuntu-latetst
     steps:
       - uses: actions/checkout@v3
       - run: docker build ../client --file ../client/Dockerfile.dev --tag asheer/react-test
