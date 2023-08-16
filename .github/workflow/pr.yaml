@@ -3,10 +3,9 @@ name: "Build and run tests for latest PR"
 on: [push]
 
 jobs:
-  checkspr:
+  checkpr:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - run: docker build . --file Dockerfile.dev --tag asheer/react-test
-      - run: docker run -e CI=true  asheer/react-test npm run test -- --coverage
-      - run: echo "All test passed"
+      - run: docker build . --file Dockerfile.dev --tag asheer/node-uat-testing:latest
+      - run: docker run -e CI=true  asheer/node-uat-testing:latest npm run test -- --coverage
