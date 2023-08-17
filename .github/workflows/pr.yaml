@@ -1,5 +1,5 @@
 name: "PR build and test"
- 
+run-name: "Build and test job"
 on: [push]
 
 jobs:
