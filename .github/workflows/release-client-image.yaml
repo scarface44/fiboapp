@@ -32,3 +32,16 @@ jobs:
         run: docker push ${{secrets.DOCKER_USERNAME}}/nginx-rp
       - name: Docker Push server-app
         run: docker push ${{secrets.DOCKER_USERNAME}}/server-app
+
+      - name: Deploy 2 EB
+        uses: einaregilsson/beanstalk-deploy@v18
+        with:
+          aws_access_key: ${{ secrets.AWS_ACCESS_KEY }}
+          aws_secret_key: ${{ secrets.AWS_SECRET_KEY }}
+          application_name: fiboapp
+          environment_name: Fiboapp-env
+          existing_bucket_name: ${{ secrets.ASS3_BUCKET }}
+          region: us-west-2
+          version_label: ${{ github.sha }}
+          use_existing_version_if_available: true
+          deployment_package: deploy.zip

@@ -1,52 +1,33 @@
-version: '3'
+    version: "3"
+    services:
+      client:
+        image: "asheer/client-app"
+        mem_limit: 128m
+        hostname: client
+      server:
+        image: "asheer/server-app"
+        mem_limit: 128m
+        hostname: api
+        environment:
+          - REDIS_HOST=${{ secrets.REDIS_HOST }}
+          - REDIS_PORT=6379
+          - PGUSER=${{ secrets.PGUSER }}
+          - PGHOST=${{ secrets.PGHOST }}
+          - PGDATABASE=${{ secrets.PGDATABASE }}
+          - PGPASSWORD=${{ secrets.PGPASSWORD }}
+          - PGPORT=5379
+      worker:
+        image: "asheer/worker-app"
+        mem_limit: 128m
+        hostname: worker
+        environment:
+          - REDIS_HOST=$REDIS_HOST
+          - REDIS_PORT=$REDIS_PORT
+      nginx:
+        image: "asheer/nginx-app"
+        mem_limit: 128m
+        hostname: nginx
+        ports:
+          - "80:80"
 
-services:
-  postgres:
-    image: 'postgres:latest'
-    environment:
-      - POSTGRES_PASSWORD=postgres_password
-  redis:
-    image: 'redis:latest'
-  api:
-    build: 
-      dockerfile: Dockerfile.dev
-      context: ./server
-    volumes:
-      - /home/node/app/node_modules
-      - ./server:/home/node/app
-    environment:
-      - REDIS_HOST=redis
-      - REDIS_PORT=6379
-      - PGUSER=postgres
-      - PGHOST=postgres
-      - PGDATABASE=postgres
-      - PGPASSWORD=postgres_password
-      - PGPORT=5432
-  
-  client:
-    build: 
-      dockerfile: Dockerfile.dev
-      context: ./client
-    volumes:
-      - /home/node/app/node_modules
-      - ./client:/home/node/app
 
-  worker:
-    build:
-      dockerfile: Dockerfile.dev
-      context: ./worker
-    volumes:
-      - /home/node/app/node_modules
-      - ./worker:/home/node/app
-    environment:
-      - REDIS_HOST=redis
-      - REDIS_PORT=6379
-
-  nginx:
-    restart: always
-    build: 
-      dockerfile: Dockerfile.dev
-      context: ./nginx
-    ports:
-      - '3333:80'
-    
