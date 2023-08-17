@@ -16,5 +16,4 @@ jobs:
       - run: docker build ./worker --tag asheer/worker-app:latest
       - run: docker build ./nginx --tag asheer/nginx-rp:latest
       - run: docker build ./server --tag asheer/server-app:latest
-      - run: docker build ./client/nginx --tag asheer/client-nginx-app:latest
       
