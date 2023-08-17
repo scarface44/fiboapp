@@ -13,6 +13,8 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - run: docker build ./client --tag asheer/client-app:latest
+      - name: Generate deployment package
+        run: zip -r deploy.zip . -x '*.git*'
       - run: docker build ./worker --tag asheer/worker-app:latest
       - run: docker build ./nginx --tag asheer/nginx-rp:latest
       - run: docker build ./server --tag asheer/server-app:latest
