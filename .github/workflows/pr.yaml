@@ -1,15 +1,14 @@
-name: "Build and run tests for latest PR"
-
+name: "PR build and test"
+run-name: ${{ github.actor }} is learning Github Actions
+ 
 on: [push]
 
 jobs:
-  checkspr:
-    runs-on: ubunt-latetst
+  checkpr:
+    runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkoutv3
-      - run: docker build ../client --file ../client/Dockerfile.dev --tag asheer/react-test
-      - run: docker run -e CI=true  asheer/react-test npm run test -- --coverage
-      - run: echo "All test passed"
-
-
-
+      - uses: actions/checkout@v3
+      - run: docker build ./client --file ./client/Dockerfile.dev --tag asheer/client-app:latest
+      - run: docker run -e CI=true  asheer/client-app:latest npm run test -- --coverage
+    
+      

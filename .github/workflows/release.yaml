@@ -1,0 +1,14 @@
+name:  "Release new Image"
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+    releaseimage:
+        runs-on: ubuntu-latest
+        steps:
+          - uses: actions/checkout@v3
+          - run: docker build ./client --tag asheer/client-app:(date +%s)
+          
+
