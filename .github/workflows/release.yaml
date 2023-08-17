@@ -1,5 +1,5 @@
 name:  "Release new Image"
-
+run-name: Releasing prod version
 on:
   push:
     branches: [main]
@@ -9,6 +9,6 @@ jobs:
         runs-on: ubuntu-latest
         steps:
           - uses: actions/checkout@v3
-          - run: docker build ./client --tag asheer/client-app:(date +%s)
-          
+          - run: docker build ./client --tag asheer/client-app:latest
+
 
